@@ -1,12 +1,3 @@
-/**
- * data.js
- * -----------------------------------------------------------------------
- * Todo el contenido editable de la landing vive aquí, separado del HTML.
- * Para actualizar textos, propuestas, eventos, zonas o redes: edita este
- * archivo. No hace falta tocar index.html ni main.js.
- * -----------------------------------------------------------------------
- */
-
 const DATA = {
 
   candidata: {
@@ -15,9 +6,7 @@ const DATA = {
     cargo: "Alcaldesa 2026",
     partido: "Renovación Popular",
     slogan: "Nandy sabe, Nandy resuelve",
-    whatsapp: "https://wa.me/51999999999", // TODO: reemplazar con el número real de campaña
-    whatsappZona: "https://wa.me/51999999999", // TODO: link al grupo de WhatsApp por zona
-    whatsappVoluntarios: "https://wa.me/51999999999" // TODO: link para voluntarios
+    whatsapp: "https://wa.me/51999999999"
   },
 
   proximoMitin: {
@@ -25,8 +14,10 @@ const DATA = {
     lugar: "Plaza Principal",
     fecha: "Este sábado",
     hora: "4:00 PM",
-    link: "#" // TODO: link a detalles (evento de Facebook, WhatsApp, etc.)
+    link: null
   },
+
+  campaignMusic: null,
 
   trayectoria: [
     {
@@ -65,36 +56,66 @@ const DATA = {
     {
       id: "seguridad",
       icono: "escudo",
-      titulo: "Seguridad",
-      descripcion: "Apoyo articulado a la PNP, implementación de alarmas vecinales y cámaras de videovigilancia de alta tecnología."
+      categoria: "Seguridad",
+      titulo: "Carabayllo Seguro e Inteligente 24/7",
+      resumen: "Tecnología, vigilancia y mayor presencia preventiva para recuperar la tranquilidad de nuestros barrios.",
+      puntos: [
+        "Videovigilancia inteligente",
+        "Drones para vigilancia preventiva",
+        "Patrullaje integrado",
+        "Central de Monitoreo Distrital 24/7"
+      ]
     },
     {
-      id: "saneamiento",
+      id: "iluminacion-saneamiento",
       icono: "llave",
-      titulo: "Saneamiento",
-      descripcion: "Ejecución del 100% del presupuesto asignado y énfasis en el saneamiento físico-legal y formalización de predios."
+      categoria: "Iluminación y Saneamiento Físico-Legal",
+      titulo: "Título Seguro, Futuro Seguro",
+      resumen: "Formalización de predios y seguridad jurídica para las familias de Carabayllo.",
+      puntos: [
+        "Orientación para formalización de predios",
+        "Coordinación con COFOPRI y entidades competentes",
+        "Asistencia técnica y legal",
+        "Seguridad jurídica frente a invasiones y tráfico de terrenos"
+      ],
+      notaPendiente: "Iluminación pública: contenido pendiente de definir con el equipo de campaña."
     },
     {
-      id: "obras",
+      id: "pistas-obras",
       icono: "herramientas",
-      titulo: "Obras",
-      descripcion: "Construcción de muros de contención, escaleras y reactivación del exitoso programa \"Manos a la Obra\"."
+      categoria: "Pistas y Obras Emblemáticas",
+      resumen: "Mejor conectividad y obras viales para acercar los sectores de Carabayllo y mejorar la movilidad de los vecinos.",
+      puntos: [
+        "Proyectos de pistas y veredas",
+        "Mejoramiento de accesos y vías",
+        "Conectividad con corredores metropolitanos",
+        "Priorización de sectores con mayor crecimiento urbano"
+      ],
+      notaPendiente: "Obras emblemáticas específicas: por confirmar con el equipo de campaña."
     },
     {
       id: "desarrollo-humano",
       icono: "familia",
-      titulo: "Desarrollo Humano",
-      descripcion: "Inversión integral en educación, salud y programas eficaces de prevención contra la violencia familiar."
+      categoria: "Desarrollo Humano",
+      resumen: "Más oportunidades para jóvenes y familias mediante educación, deporte, salud, inclusión, cultura y programas de desarrollo.",
+      etiquetas: ["Jóvenes", "Familias", "Salud", "Deporte", "Inclusión"]
     },
     {
       id: "parques-limpieza",
       icono: "arbol",
-      titulo: "Parques y Limpieza",
-      descripcion: "Recuperación activa y mantenimiento permanente de áreas verdes, losas deportivas y espacios públicos."
+      categoria: "Parques y Limpieza",
+      programas: ["Carabayllo Limpio y Orgulloso", "Más Parques, Más Vida"],
+      resumen: "Recuperaremos nuestros parques y espacios públicos para construir un Carabayllo más limpio, verde y ordenado.",
+      puntos: [
+        "Recuperación de parques y áreas verdes",
+        "Mejoramiento de limpieza pública",
+        "Reciclaje y arborización",
+        "Riego tecnificado en espacios públicos"
+      ]
     }
   ],
 
-  planGobiernoUrl: "#", // TODO: link al PDF del plan de gobierno
+  planGobiernoUrl: null,
 
   zonas: [
     { id: "zona-1", nombre: "Lomas" },
@@ -102,47 +123,28 @@ const DATA = {
     { id: "zona-3", nombre: "Centro" },
     { id: "zona-4", nombre: "El Progreso" },
     { id: "zona-5", nombre: "Punchauca" }
-    // TODO: completar con las zonas reales de Carabayllo cuando la campaña las defina
   ],
 
-  agenda: [
-    {
-      dia: "15",
-      mes: "OCT",
-      estado: "proximo", // "proximo" | "realizado"
-      titulo: "Gran Caminata Lomas",
-      hora: "16:00 hrs",
-      lugar: "Plaza Central"
-    },
-    {
-      dia: "10",
-      mes: "OCT",
-      estado: "realizado",
-      titulo: "Asamblea San Pedro",
-      hora: "",
-      lugar: "Concluido con éxito"
-    }
-    // TODO: actualizar cada 2 semanas con las caminatas/asambleas reales
-  ],
+  actividades: {
+    caminatasRealizadas: [],
+    proximas: []
+  },
 
   electoral: {
     texto: "Información oficial extraída del portal de Voto Informado del Jurado Nacional de Elecciones (JNE) y la Oficina Nacional de Procesos Electorales (ONPE).",
-    linkJNE: "https://votoinformado.jne.gob.pe/", // TODO: verificar/actualizar link exacto
-    linkONPE: "https://www.onpe.gob.pe/" // TODO: verificar/actualizar link exacto (consulta de local de votación)
+    linkJNE: "https://votoinformado.jne.gob.pe/",
+    linkONPE: "https://www.onpe.gob.pe/"
   },
 
-  redes: [
-    { nombre: "Instagram", icono: "instagram", usuario: "@NandyCordova", url: "https://instagram.com/", color: "instagram" },
-    { nombre: "Facebook", icono: "facebook", usuario: "@NandyCordova", url: "https://facebook.com/", color: "facebook" },
-    { nombre: "TikTok", icono: "tiktok", usuario: "@NandyCordova", url: "https://tiktok.com/", color: "tiktok" },
-    { nombre: "X", icono: "x", usuario: "@NandyCordova", url: "https://x.com/", color: "x" }
-    // TODO: reemplazar por los usuarios/links reales confirmados por la campaña
-  ],
+  redes: {
+    facebook: null,
+    tiktok: null
+  },
 
   footer: {
     linea1: "Campaña Nandy Córdova Alcaldesa",
     copyright: "© 2026 Renovación Popular. Todos los derechos reservados.",
-    atribucion: "Página informativa de la candidatura de Nandy Córdova Morales." // atribución JNE
+    atribucion: "Página informativa de la candidatura de Nandy Córdova Morales."
   }
 
 };

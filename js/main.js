@@ -1,17 +1,6 @@
-/**
- * main.js
- * -----------------------------------------------------------------------
- * Lógica de la landing: navegación por tabs + render de contenido a
- * partir de DATA (data.js). No contiene contenido "hardcodeado": todo
- * texto/lista sale de DATA para que actualizar la web sea editar
- * data.js, no este archivo.
- * -----------------------------------------------------------------------
- */
-
 (function () {
   "use strict";
 
-  /* ---------------- ICONOS (line icons en SVG, como string) ---------------- */
   const ICONS = {
     balanza: '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#fff" stroke-width="2"><path d="M12 3v18"/><path d="M5 7h14"/><path d="M5 7 2 13a3 3 0 0 0 6 0z"/><path d="M19 7l-3 6a3 3 0 0 0 6 0z"/></svg>',
     birrete: '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#fff" stroke-width="2"><path d="m2 9 10-5 10 5-10 5z"/><path d="M6 11v5c0 1.5 3 3 6 3s6-1.5 6-3v-5"/><path d="M22 9v6"/></svg>',
@@ -24,31 +13,41 @@
     personas: '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#fff" stroke-width="2"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.3"/><path d="M3 20v-1a5 5 0 0 1 5-5h2a5 5 0 0 1 5 5v1"/><path d="M15 20v-.5a3.5 3.5 0 0 1 3.5-3.5h0a3.5 3.5 0 0 1 3.5 3.5V20"/></svg>',
     foco: '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#fff" stroke-width="2"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a6 6 0 0 0-4 10.5c.6.6 1 1.4 1 2.5h6c0-1.1.4-1.9 1-2.5A6 6 0 0 0 12 2z"/></svg>',
     manos: '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#fff" stroke-width="2"><path d="m11 17 2 2 4-4"/><path d="M1 12s3-6 8-6c3 0 4 2 7 2s5-2 5-2"/><path d="M1 12s3 6 8 6"/></svg>',
-    instagram: '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#fff" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg>',
     facebook: '<svg viewBox="0 0 24 24" width="18" height="18" fill="#fff"><path d="M13.5 21v-8h2.7l.4-3.2h-3.1V7.7c0-.9.3-1.6 1.6-1.6h1.7V3.2C16.5 3.1 15.4 3 14.2 3c-2.6 0-4.4 1.6-4.4 4.5v2.3H7v3.2h2.8V21z"/></svg>',
-    tiktok: '<svg viewBox="0 0 24 24" width="18" height="18" fill="#fff"><path d="M14 3c.3 2 1.8 3.5 4 3.8v2.7c-1.4 0-2.8-.4-4-1.2v6.4a5.3 5.3 0 1 1-5.3-5.3c.3 0 .6 0 .9.1v2.8a2.5 2.5 0 1 0 1.7 2.4V3z"/></svg>',
-    x: '<svg viewBox="0 0 24 24" width="18" height="18" fill="#fff"><path d="M4 4l7 8.5L4.3 20h2l6-6.6L17 20h3l-7.3-8.9L19.5 4h-2l-5.6 6.1L7 4z"/></svg>'
+    tiktok: '<svg viewBox="0 0 24 24" width="18" height="18" fill="#fff"><path d="M14 3c.3 2 1.8 3.5 4 3.8v2.7c-1.4 0-2.8-.4-4-1.2v6.4a5.3 5.3 0 1 1-5.3-5.3c.3 0 .6 0 .9.1v2.8a2.5 2.5 0 1 0 1.7 2.4V3z"/></svg>'
+  };
+
+  const REDES_META = {
+    facebook: { nombre: "Facebook", icono: "facebook", color: "facebook" },
+    tiktok: { nombre: "TikTok", icono: "tiktok", color: "tiktok" }
   };
 
   const iconOr = (key, fallback) => ICONS[key] || fallback || ICONS.foco;
 
-  /* ---------------- TABS ---------------- */
   const screens = document.querySelectorAll(".screen");
   const navBtns = document.querySelectorAll(".nav-btn");
   const gotoBtns = document.querySelectorAll("[data-goto]");
+  const TABS = Array.from(screens, (s) => s.dataset.tab);
 
-  function goToTab(tabName) {
+  function goToTab(tabName, updateHash) {
+    if (!TABS.includes(tabName)) tabName = "inicio";
     screens.forEach((s) => s.classList.toggle("active", s.dataset.tab === tabName));
     navBtns.forEach((b) => b.classList.toggle("active", b.dataset.goto === tabName));
     document.getElementById("main-content").scrollTo({ top: 0, behavior: "instant" in window ? "instant" : "auto" });
     window.scrollTo(0, 0);
+    if (updateHash !== false && window.location.hash !== "#" + tabName) {
+      window.location.hash = tabName;
+    }
   }
 
   gotoBtns.forEach((btn) => {
     btn.addEventListener("click", () => goToTab(btn.dataset.goto));
   });
 
-  /* ---------------- RENDER: HEADER / HERO / MITIN ---------------- */
+  window.addEventListener("hashchange", () => {
+    goToTab(window.location.hash.replace("#", ""), false);
+  });
+
   function renderHeaderAndHero() {
     const wa = DATA.candidata.whatsapp;
     document.getElementById("header-whatsapp").href = wa;
@@ -57,10 +56,30 @@
     document.getElementById("mitin-titulo").textContent = DATA.proximoMitin.titulo;
     document.getElementById("mitin-lugar").textContent = DATA.proximoMitin.lugar;
     document.getElementById("mitin-fecha").textContent = `${DATA.proximoMitin.fecha}, ${DATA.proximoMitin.hora}`;
-    document.getElementById("mitin-link").href = DATA.proximoMitin.link;
+
+    const mitinLink = document.getElementById("mitin-link");
+    if (DATA.proximoMitin.link) {
+      mitinLink.href = DATA.proximoMitin.link;
+      mitinLink.hidden = false;
+    } else {
+      mitinLink.hidden = true;
+    }
   }
 
-  /* ---------------- RENDER: NANDY TAB ---------------- */
+  function renderMusic() {
+    const card = document.getElementById("music-card");
+    const audio = document.getElementById("music-audio");
+    const titulo = document.getElementById("music-titulo");
+
+    if (DATA.campaignMusic && DATA.campaignMusic.src) {
+      audio.src = DATA.campaignMusic.src;
+      titulo.textContent = DATA.campaignMusic.titulo || "Música Oficial";
+      card.hidden = false;
+    } else {
+      card.hidden = true;
+    }
+  }
+
   function renderValues() {
     const el = document.getElementById("values-strip");
     el.innerHTML = DATA.valores.map((v) => `
@@ -85,23 +104,41 @@
     `).join("");
   }
 
-  /* ---------------- RENDER: PROPUESTAS TAB ---------------- */
   function renderPropuestas() {
     const el = document.getElementById("propuestas-list");
-    el.innerHTML = DATA.propuestas.map((p) => `
-      <div class="proposal-card">
-        <div class="proposal-icon">${iconOr(p.icono)}</div>
-        <div>
-          <p class="proposal-title">${p.titulo}</p>
-          <p class="proposal-desc">${p.descripcion}</p>
+    el.innerHTML = DATA.propuestas.map((p) => {
+      const subtitulo = p.titulo || (p.programas && p.programas.length ? p.programas.join(" · ") : "");
+      return `
+        <div class="proposal-card">
+          <div class="proposal-icon">${iconOr(p.icono)}</div>
+          <div>
+            <p class="proposal-title">${p.categoria}</p>
+            ${subtitulo ? `<p class="proposal-programs">${subtitulo}</p>` : ""}
+            <p class="proposal-desc">${p.resumen}</p>
+            ${p.puntos && p.puntos.length ? `
+              <ul class="proposal-points">
+                ${p.puntos.map((pt) => `<li>${pt}</li>`).join("")}
+              </ul>
+            ` : ""}
+            ${p.etiquetas && p.etiquetas.length ? `
+              <div class="proposal-tags">
+                ${p.etiquetas.map((t) => `<span class="proposal-tag">${t}</span>`).join("")}
+              </div>
+            ` : ""}
+          </div>
         </div>
-      </div>
-    `).join("");
+      `;
+    }).join("");
 
-    document.getElementById("plan-gobierno-link").href = DATA.planGobiernoUrl;
+    const planLink = document.getElementById("plan-gobierno-link");
+    if (DATA.planGobiernoUrl) {
+      planLink.href = DATA.planGobiernoUrl;
+      planLink.hidden = false;
+    } else {
+      planLink.hidden = true;
+    }
   }
 
-  /* ---------------- RENDER: EVENTOS TAB ---------------- */
   function renderZonas() {
     const select = document.getElementById("zona-select");
     DATA.zonas.forEach((z) => {
@@ -119,31 +156,49 @@
         ? `Mostrando propuestas y asambleas cerca de "${selected.nombre}".`
         : "Selecciona una zona de la lista para continuar.";
     });
-
-    document.getElementById("zona-whatsapp-link").href = DATA.candidata.whatsappZona;
   }
 
-  function renderAgenda() {
-    const el = document.getElementById("agenda-list");
-    el.innerHTML = DATA.agenda.map((a) => {
-      const isDone = a.estado === "realizado";
-      return `
-        <div class="agenda-item ${isDone ? "is-realizado" : ""}">
-          <div class="agenda-date">
-            <span class="d">${a.dia}</span>
-            <span class="m">${a.mes}</span>
-          </div>
-          <div>
-            <span class="agenda-badge">${isDone ? "Realizado" : "Próximo"}</span>
-            <p class="agenda-title">${a.titulo}</p>
-            <p class="agenda-meta">${isDone ? "✓ " : ""}${[a.hora, a.lugar].filter(Boolean).join(" · ")}</p>
-          </div>
+  function renderCaminatas() {
+    const el = document.getElementById("caminatas-list");
+    const items = DATA.actividades.caminatasRealizadas;
+
+    if (!items.length) {
+      el.innerHTML = `<p class="empty-state">Aún no hay caminatas publicadas.</p>`;
+      return;
+    }
+
+    el.innerHTML = items.map((c) => `
+      <div class="agenda-item is-realizado">
+        <div>
+          <span class="agenda-badge">${c.zona || "Realizado"}</span>
+          <p class="agenda-title">${c.titulo}</p>
+          <p class="agenda-meta">${[c.fecha].filter(Boolean).join(" · ")}</p>
+          ${c.enlace ? `<a href="${c.enlace}" class="link-small" target="_blank" rel="noopener">Ver video/enlace →</a>` : ""}
         </div>
-      `;
-    }).join("");
+      </div>
+    `).join("");
   }
 
-  /* ---------------- RENDER: REDES TAB ---------------- */
+  function renderProximas() {
+    const el = document.getElementById("proximas-list");
+    const items = DATA.actividades.proximas;
+
+    if (!items.length) {
+      el.innerHTML = `<p class="empty-state">Agenda de actividades próximamente.</p>`;
+      return;
+    }
+
+    el.innerHTML = items.map((a) => `
+      <div class="agenda-item">
+        <div>
+          <span class="agenda-badge">${a.esCierre ? "Cierre de Campaña" : "Próximo"}</span>
+          <p class="agenda-title">${a.titulo}</p>
+          <p class="agenda-meta">${[a.fecha, a.lugar].filter(Boolean).join(" · ")}</p>
+        </div>
+      </div>
+    `).join("");
+  }
+
   function renderElectoral() {
     document.getElementById("electoral-texto").textContent = DATA.electoral.texto;
     document.getElementById("link-jne").href = DATA.electoral.linkJNE;
@@ -152,14 +207,21 @@
 
   function renderRedes() {
     const el = document.getElementById("social-grid");
-    el.innerHTML = DATA.redes.map((r) => `
-      <a class="social-card ${r.color}" href="${r.url}" target="_blank" rel="noopener">
-        <span class="icon-round">${iconOr(r.icono)}</span>
-        <span class="handle">${r.usuario}</span>
-      </a>
-    `).join("");
+    const activas = Object.keys(REDES_META)
+      .filter((key) => DATA.redes[key])
+      .map((key) => {
+        const meta = REDES_META[key];
+        return `
+          <a class="social-card ${meta.color}" href="${DATA.redes[key]}" target="_blank" rel="noopener">
+            <span class="icon-round">${iconOr(meta.icono)}</span>
+            <span class="handle">${meta.nombre}</span>
+          </a>
+        `;
+      });
 
-    document.getElementById("voluntarios-link").href = DATA.candidata.whatsappVoluntarios;
+    el.innerHTML = activas.length
+      ? activas.join("")
+      : `<p class="empty-state">Enlaces a redes disponibles próximamente.</p>`;
   }
 
   function renderFooter() {
@@ -168,18 +230,21 @@
     document.getElementById("footer-copy").textContent = DATA.footer.copyright;
   }
 
-  /* ---------------- INIT ---------------- */
   function init() {
     renderHeaderAndHero();
+    renderMusic();
     renderValues();
     renderTrayectoria();
     renderPropuestas();
     renderZonas();
-    renderAgenda();
+    renderCaminatas();
+    renderProximas();
     renderElectoral();
     renderRedes();
     renderFooter();
-    goToTab("inicio");
+
+    const initialTab = window.location.hash.replace("#", "") || "inicio";
+    goToTab(initialTab, false);
   }
 
   document.addEventListener("DOMContentLoaded", init);
