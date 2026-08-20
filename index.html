@@ -20,64 +20,94 @@
       <span>POPULAR</span>
     </div>
   </div>
-  <a class="btn-whatsapp-pill" id="header-whatsapp" href="#" target="_blank" rel="noopener">
-    <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.28-1.38a9.9 9.9 0 0 0 4.76 1.21h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.5 2 12.04 2zm5.8 14.08c-.24.68-1.4 1.32-1.93 1.4-.5.08-1.13.11-1.83-.11-.42-.13-.96-.31-1.65-.6-2.9-1.25-4.8-4.16-4.94-4.35-.15-.19-1.18-1.57-1.18-3 0-1.42.75-2.12 1.02-2.41.26-.29.58-.36.77-.36.19 0 .39 0 .56.01.18.01.42-.07.66.5.24.58.83 2 .9 2.15.07.15.12.32.02.51-.1.19-.15.3-.29.46-.15.17-.31.37-.44.5-.15.15-.3.31-.13.6.17.29.75 1.24 1.62 2.01 1.11.99 2.05 1.3 2.34 1.44.29.15.46.13.63-.08.17-.2.72-.84.92-1.13.19-.29.39-.24.65-.14.27.1 1.7.8 1.99.95.29.14.48.22.55.34.07.13.07.72-.17 1.4z"/></svg>
-    WhatsApp
-  </a>
+
+  <nav class="top-nav" aria-label="Navegación principal">
+    <button class="nav-btn nav-btn-top" data-goto="inicio" type="button">Inicio</button>
+    <button class="nav-btn nav-btn-top" data-goto="nandy" type="button">Nandy</button>
+    <button class="nav-btn nav-btn-top" data-goto="propuestas" type="button">Propuestas</button>
+    <button class="nav-btn nav-btn-top" data-goto="eventos" type="button">Eventos</button>
+    <button class="nav-btn nav-btn-top" data-goto="redes" type="button">Información</button>
+  </nav>
 </header>
 
 <main id="main-content">
 
   <section class="screen" id="tab-inicio" data-tab="inicio">
     <div class="hero">
-      <div class="hero-badge-wrap">
-        <img src="img/hero-badge.png" alt="Nandy Córdova, Alcaldesa 2026" class="hero-badge">
+      <div class="hero-inner">
+        <div class="hero-media">
+          <div class="hero-badge-wrap">
+            <img src="img/hero-badge.png" alt="Nandy Córdova, Alcaldesa 2026" class="hero-badge">
+          </div>
+        </div>
+
+        <div class="hero-content">
+          <h1 class="hero-title outline-text">
+            <span>Nandy</span>
+            <span>Córdova</span>
+          </h1>
+
+          <div class="hero-chip">
+            <span class="chip-dash">--</span> Alcaldesa 2026 <span class="chip-dash">--</span>
+          </div>
+
+          <p class="hero-quote">&ldquo;Nandy sabe, Nandy resuelve&rdquo;</p>
+
+          <div class="hero-ctas">
+            <button class="btn btn-primary" data-goto="propuestas">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="6" y="3" width="12" height="18" rx="2"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="9" y1="12" x2="15" y2="12"/><line x1="9" y1="16" x2="12" y2="16"/></svg>
+              Ver Propuestas
+            </button>
+          </div>
+        </div>
       </div>
+    </div>
 
-      <h1 class="hero-title outline-text">
-        <span>Nandy</span>
-        <span>Córdova</span>
-      </h1>
+    <div class="home-social">
+      <h2 class="subheading home-social-title">Sigue la campaña</h2>
+      <div class="social-grid" id="home-social-grid"></div>
+    </div>
 
-      <div class="hero-chip">
-        <span class="chip-dash">--</span> Alcaldesa 2026 <span class="chip-dash">--</span>
-      </div>
+    <div class="quick-links">
+      <h2 class="subheading quick-links-title">Conoce Nandy Conecta</h2>
 
-      <p class="hero-quote">&ldquo;Nandy sabe, Nandy resuelve&rdquo;</p>
-
-      <div class="hero-ctas">
-        <button class="btn btn-primary" data-goto="propuestas">
-          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="6" y="3" width="12" height="18" rx="2"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="9" y1="12" x2="15" y2="12"/><line x1="9" y1="16" x2="12" y2="16"/></svg>
-          Ver Propuestas
+      <div class="quick-links-grid">
+        <button class="quick-card" data-goto="nandy" type="button">
+          <span class="icon-round icon-round-navy quick-card-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#fff" stroke-width="2"><rect x="4" y="3" width="16" height="18" rx="2"/><circle cx="12" cy="10" r="2.5"/><path d="M8 17c.7-2 2-3 4-3s3.3 1 4 3"/></svg>
+          </span>
+          <span class="quick-card-title">Conoce a Nandy</span>
+          <span class="quick-card-desc">Conoce su historia, trayectoria y compromiso con Carabayllo.</span>
+          <span class="quick-card-cta">
+            Conocer más
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </span>
         </button>
-        <a class="btn btn-whatsapp" href="#" id="hero-whatsapp" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.28-1.38a9.9 9.9 0 0 0 4.76 1.21h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.5 2 12.04 2zm5.8 14.08c-.24.68-1.4 1.32-1.93 1.4-.5.08-1.13.11-1.83-.11-.42-.13-.96-.31-1.65-.6-2.9-1.25-4.8-4.16-4.94-4.35-.15-.19-1.18-1.57-1.18-3 0-1.42.75-2.12 1.02-2.41.26-.29.58-.36.77-.36.19 0 .39 0 .56.01.18.01.42-.07.66.5.24.58.83 2 .9 2.15.07.15.12.32.02.51-.1.19-.15.3-.29.46-.15.17-.31.37-.44.5-.15.15-.3.31-.13.6.17.29.75 1.24 1.62 2.01 1.11.99 2.05 1.3 2.34 1.44.29.15.46.13.63-.08.17-.2.72-.84.92-1.13.19-.29.39-.24.65-.14.27.1 1.7.8 1.99.95.29.14.48.22.55.34.07.13.07.72-.17 1.4z"/></svg>
-          Unirse al WhatsApp
-        </a>
-      </div>
-    </div>
 
-    <div class="card card-party">
-      <div class="brand-logo brand-logo-sm" aria-hidden="true">R</div>
-      <div>
-        <p class="card-party-label">Vota por</p>
-        <p class="card-party-name">Renovación Popular</p>
-      </div>
-    </div>
+        <button class="quick-card" data-goto="propuestas" type="button">
+          <span class="icon-round icon-round-navy quick-card-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#fff" stroke-width="2"><rect x="6" y="3" width="12" height="18" rx="2"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="9" y1="12" x2="15" y2="12"/><line x1="9" y1="16" x2="12" y2="16"/></svg>
+          </span>
+          <span class="quick-card-title">Propuestas</span>
+          <span class="quick-card-desc">Conoce los principales ejes y propuestas para Carabayllo.</span>
+          <span class="quick-card-cta">
+            Ver propuestas
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </span>
+        </button>
 
-    <div class="card card-dark card-mitin">
-      <div class="card-mitin-head">
-        <span class="card-mitin-label" id="mitin-titulo">Próximo Mitin</span>
-        <span class="icon-round icon-round-ghost" aria-hidden="true">
-          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="M19 12a7 7 0 0 1-2 5"/></svg>
-        </span>
+        <button class="quick-card" data-goto="eventos" type="button">
+          <span class="icon-round icon-round-navy quick-card-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#fff" stroke-width="2"><rect x="3" y="4" width="18" height="17" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="16" y1="2" x2="16" y2="6"/></svg>
+          </span>
+          <span class="quick-card-title">Actividades</span>
+          <span class="quick-card-desc">Caminatas, encuentros y próximas actividades de campaña.</span>
+          <span class="quick-card-cta">
+            Ver actividades
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </span>
+        </button>
       </div>
-      <p class="card-mitin-place">
-        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 21s7-6.6 7-11.5A7 7 0 0 0 5 9.5C5 14.4 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
-        <span id="mitin-lugar">Plaza Principal</span>
-      </p>
-      <p class="card-mitin-time" id="mitin-fecha">Este sábado, 4:00 PM</p>
-      <a href="#" class="card-mitin-link" id="mitin-link" hidden>Ver detalles →</a>
     </div>
 
     <div class="card card-dark card-music" id="music-card" hidden>
@@ -91,30 +121,39 @@
   </section>
 
   <section class="screen" id="tab-nandy" data-tab="nandy">
-    <div class="nandy-photo-wrap">
-      <img src="img/nandy-photo.png" alt="Nandy Córdova" class="nandy-photo">
+    <div class="nandy-grid">
+      <div class="nandy-col-left">
+        <div class="nandy-photo-wrap">
+          <img src="img/nandy-photo.png" alt="Nandy Córdova" class="nandy-photo">
+        </div>
+
+        <span class="eyebrow eyebrow-navy">Conoce a Nandy</span>
+
+        <h2 class="section-headline">
+          Gestión con experiencia<br>
+          <span class="accent">Compromiso y resultados</span>
+        </h2>
+
+        <p class="section-copy">
+          Mi compromiso es transformar Carabayllo con orden, seguridad y obras reales.
+          20 años de experiencia municipal me respaldan para saber cómo gobernar.
+        </p>
+      </div>
+
+      <div class="nandy-col-right">
+        <div class="values-strip" id="values-strip"></div>
+
+        <h3 class="subheading">Trayectoria Profesional</h3>
+        <div class="timeline" id="trayectoria-list"></div>
+      </div>
     </div>
 
-    <h2 class="section-headline">
-      Gestión con experiencia<br>
-      <span class="accent">Compromiso y resultados</span>
-    </h2>
-
-    <p class="section-copy">
-      Mi compromiso es transformar Carabayllo con orden, seguridad y obras reales.
-      20 años de experiencia municipal me respaldan para saber cómo gobernar.
-    </p>
-
-    <div class="values-strip" id="values-strip"></div>
-
-    <h3 class="subheading">Trayectoria Profesional</h3>
-    <div class="timeline" id="trayectoria-list"></div>
-
     <div class="card card-cta-dark">
-      <p>Únete al cambio por Carabayllo</p>
-      <button class="btn btn-gradient" data-goto="redes">
-        <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
-        Vota por Nandy
+      <p class="cta-dark-title">Únete al cambio por Carabayllo</p>
+      <p class="cta-dark-desc">Descubre las principales propuestas y ejes de trabajo de Nandy para construir un Carabayllo más seguro, ordenado y con oportunidades.</p>
+      <button class="btn btn-gradient cta-dark-btn" data-goto="propuestas" type="button">
+        <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="6" y="3" width="12" height="18" rx="2"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="9" y1="12" x2="15" y2="12"/><line x1="9" y1="16" x2="12" y2="16"/></svg>
+        Conocer Propuestas
       </button>
     </div>
   </section>
@@ -138,11 +177,22 @@
         <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/></svg>
         Tu Comunidad
       </span>
-      <p class="card-hero-zona-title">Mi Zona</p>
-      <p class="card-hero-zona-copy">Encuentra las propuestas y asambleas cerca de ti.</p>
+      <p class="card-hero-zona-title">Recorridos por tu Zona</p>
+      <p class="card-hero-zona-copy" id="zona-intro">Selecciona tu zona para conocer las caminatas realizadas y las próximas visitas de Nandy.</p>
+      <p class="card-hero-zona-note" id="zona-nota-ubicacion">Las ubicaciones exactas se publicarán cuando sean confirmadas por el equipo de campaña.</p>
     </div>
 
-    <div class="card card-zone-select">
+    <div class="card recorridos-empty" id="recorridos-empty-state" hidden>
+      <p class="recorridos-empty-title">Próximamente</p>
+      <p class="recorridos-empty-text">Muy pronto podrás conocer las caminatas, visitas y actividades de Nandy en tu sector.</p>
+      <p class="recorridos-empty-note">Las ubicaciones exactas se publicarán cuando sean confirmadas por el equipo de campaña.</p>
+      <a class="btn btn-gradient" id="recorridos-empty-tiktok" href="#" target="_blank" rel="noopener noreferrer" hidden>
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M14 3c.3 2 1.8 3.5 4 3.8v2.7c-1.4 0-2.8-.4-4-1.2v6.4a5.3 5.3 0 1 1-5.3-5.3c.3 0 .6 0 .9.1v2.8a2.5 2.5 0 1 0 1.7 2.4V3z"/></svg>
+        Síguenos en TikTok
+      </a>
+    </div>
+
+    <div class="card card-zone-select" id="zona-select-wrap" hidden>
       <p class="zone-select-title">
         <span class="icon-round icon-round-navy" aria-hidden="true">
           <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#fff" stroke-width="2"><path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2z"/><path d="M9 4v14M15 6v14"/></svg>
@@ -159,18 +209,24 @@
       <p class="zone-feedback" id="zona-feedback" hidden></p>
     </div>
 
-    <div class="agenda-head">
-      <h3 class="subheading">Caminatas Realizadas</h3>
+    <div id="caminatas-section" hidden>
+      <div class="agenda-head">
+        <h3 class="subheading">Caminatas Realizadas</h3>
+      </div>
+      <div class="agenda-list" id="caminatas-list"></div>
     </div>
-    <div class="agenda-list" id="caminatas-list"></div>
 
-    <div class="agenda-head">
-      <h3 class="subheading">Próximas Actividades</h3>
+    <div id="proximas-section" hidden>
+      <div class="agenda-head">
+        <h3 class="subheading">Próximas Actividades</h3>
+      </div>
+      <div class="agenda-list" id="proximas-list"></div>
     </div>
-    <div class="agenda-list" id="proximas-list"></div>
   </section>
 
   <section class="screen" id="tab-redes" data-tab="redes">
+    <h2 class="section-title">Información</h2>
+
     <div class="card card-electoral">
       <p class="card-electoral-title">
         <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 2 3 6v6c0 5 4 8.5 9 10 5-1.5 9-5 9-10V6z"/></svg>
@@ -220,7 +276,7 @@
   </button>
   <button class="nav-btn" data-goto="redes" type="button">
     <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="6" r="2.5"/><circle cx="18" cy="18" r="2.5"/><line x1="8.2" y1="10.8" x2="15.8" y2="7.2"/><line x1="8.2" y1="13.2" x2="15.8" y2="16.8"/></svg>
-    <span>Redes</span>
+    <span>Información</span>
   </button>
 </nav>
 

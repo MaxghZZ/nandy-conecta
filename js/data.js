@@ -117,13 +117,22 @@ const DATA = {
 
   planGobiernoUrl: null,
 
-  zonas: [
-    { id: "zona-1", nombre: "Lomas" },
-    { id: "zona-2", nombre: "San Pedro" },
-    { id: "zona-3", nombre: "Centro" },
-    { id: "zona-4", nombre: "El Progreso" },
-    { id: "zona-5", nombre: "Punchauca" }
-  ],
+  // "Recorridos por tu Zona": el usuario elige un sector y encuentra caminatas
+  // ya realizadas y la próxima visita en esa zona (sin propuestas por zona).
+  // Aún no existe la lista oficial de sectores, así que `zonas` queda vacío
+  // hasta que la campaña la confirme. Forma que tendrá cada elemento cuando
+  // exista información real:
+  // {
+  //   id: "zona-x",
+  //   nombre: "Nombre real del sector",
+  //   caminatasRealizadas: [ { titulo, fecha, enlace } ],
+  //   proximaVisita: { fecha, estadoConvocatoria, ubicacion } | null
+  // }
+  recorridosZona: {
+    intro: "Selecciona tu zona para conocer las caminatas realizadas y las próximas visitas de Nandy.",
+    notaUbicacion: "Las ubicaciones exactas se publicarán cuando sean confirmadas por el equipo de campaña.",
+    zonas: []
+  },
 
   actividades: {
     caminatasRealizadas: [],
@@ -137,8 +146,14 @@ const DATA = {
   },
 
   redes: {
-    facebook: null,
-    tiktok: null
+    tiktok: {
+      nombre: "TikTok",
+      url: "https://www.tiktok.com/@nandycordovamorales?_r=1&_t=ZS-98xo3nlQE4a"
+    },
+    facebook: {
+      nombre: "Facebook",
+      url: null
+    }
   },
 
   footer: {

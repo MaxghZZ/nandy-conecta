@@ -18,8 +18,8 @@
   };
 
   const REDES_META = {
-    facebook: { nombre: "Facebook", icono: "facebook", color: "facebook" },
-    tiktok: { nombre: "TikTok", icono: "tiktok", color: "tiktok" }
+    facebook: { icono: "facebook", color: "facebook" },
+    tiktok: { icono: "tiktok", color: "tiktok" }
   };
 
   const iconOr = (key, fallback) => ICONS[key] || fallback || ICONS.foco;
@@ -47,24 +47,6 @@
   window.addEventListener("hashchange", () => {
     goToTab(window.location.hash.replace("#", ""), false);
   });
-
-  function renderHeaderAndHero() {
-    const wa = DATA.candidata.whatsapp;
-    document.getElementById("header-whatsapp").href = wa;
-    document.getElementById("hero-whatsapp").href = wa;
-
-    document.getElementById("mitin-titulo").textContent = DATA.proximoMitin.titulo;
-    document.getElementById("mitin-lugar").textContent = DATA.proximoMitin.lugar;
-    document.getElementById("mitin-fecha").textContent = `${DATA.proximoMitin.fecha}, ${DATA.proximoMitin.hora}`;
-
-    const mitinLink = document.getElementById("mitin-link");
-    if (DATA.proximoMitin.link) {
-      mitinLink.href = DATA.proximoMitin.link;
-      mitinLink.hidden = false;
-    } else {
-      mitinLink.hidden = true;
-    }
-  }
 
   function renderMusic() {
     const card = document.getElementById("music-card");
@@ -139,9 +121,22 @@
     }
   }
 
-  function renderZonas() {
+  function renderRecorridosZona() {
+    const data = DATA.recorridosZona;
+
+    const introEl = document.getElementById("zona-intro");
+    if (introEl) introEl.textContent = data.intro;
+
+    const notaEl = document.getElementById("zona-nota-ubicacion");
+    if (notaEl) notaEl.textContent = data.notaUbicacion;
+
+    const wrap = document.getElementById("zona-select-wrap");
+    const hasZonas = !!(data.zonas && data.zonas.length);
+    wrap.hidden = !hasZonas;
+    if (!hasZonas) return;
+
     const select = document.getElementById("zona-select");
-    DATA.zonas.forEach((z) => {
+    data.zonas.forEach((z) => {
       const opt = document.createElement("option");
       opt.value = z.id;
       opt.textContent = z.nombre;
@@ -150,24 +145,22 @@
 
     const feedback = document.getElementById("zona-feedback");
     document.getElementById("zona-ver-btn").addEventListener("click", () => {
-      const selected = DATA.zonas.find((z) => z.id === select.value);
+      const selected = data.zonas.find((z) => z.id === select.value);
       feedback.hidden = false;
       feedback.textContent = selected
-        ? `Mostrando propuestas y asambleas cerca de "${selected.nombre}".`
+        ? `Mostrando caminatas realizadas y próximas visitas para "${selected.nombre}".`
         : "Selecciona una zona de la lista para continuar.";
     });
   }
 
   function renderCaminatas() {
-    const el = document.getElementById("caminatas-list");
+    const section = document.getElementById("caminatas-section");
     const items = DATA.actividades.caminatasRealizadas;
+    const hasItems = !!(items && items.length);
+    section.hidden = !hasItems;
+    if (!hasItems) return;
 
-    if (!items.length) {
-      el.innerHTML = `<p class="empty-state">Aún no hay caminatas publicadas.</p>`;
-      return;
-    }
-
-    el.innerHTML = items.map((c) => `
+    document.getElementById("caminatas-list").innerHTML = items.map((c) => `
       <div class="agenda-item is-realizado">
         <div>
           <span class="agenda-badge">${c.zona || "Realizado"}</span>
@@ -180,15 +173,13 @@
   }
 
   function renderProximas() {
-    const el = document.getElementById("proximas-list");
+    const section = document.getElementById("proximas-section");
     const items = DATA.actividades.proximas;
+    const hasItems = !!(items && items.length);
+    section.hidden = !hasItems;
+    if (!hasItems) return;
 
-    if (!items.length) {
-      el.innerHTML = `<p class="empty-state">Agenda de actividades próximamente.</p>`;
-      return;
-    }
-
-    el.innerHTML = items.map((a) => `
+    document.getElementById("proximas-list").innerHTML = items.map((a) => `
       <div class="agenda-item">
         <div>
           <span class="agenda-badge">${a.esCierre ? "Cierre de Campaña" : "Próximo"}</span>
@@ -199,22 +190,45 @@
     `).join("");
   }
 
+  function renderEventosEmptyState() {
+    const hasZonas = !!(DATA.recorridosZona.zonas && DATA.recorridosZona.zonas.length);
+    const hasCaminatas = !!(DATA.actividades.caminatasRealizadas && DATA.actividades.caminatasRealizadas.length);
+    const hasProximas = !!(DATA.actividades.proximas && DATA.actividades.proximas.length);
+    const hasAny = hasZonas || hasCaminatas || hasProximas;
+
+    const empty = document.getElementById("recorridos-empty-state");
+    empty.hidden = hasAny;
+    if (hasAny) return;
+
+    const tiktokUrl = DATA.redes.tiktok && DATA.redes.tiktok.url;
+    const cta = document.getElementById("recorridos-empty-tiktok");
+    if (tiktokUrl) {
+      cta.href = tiktokUrl;
+      cta.hidden = false;
+    } else {
+      cta.hidden = true;
+    }
+  }
+
   function renderElectoral() {
     document.getElementById("electoral-texto").textContent = DATA.electoral.texto;
     document.getElementById("link-jne").href = DATA.electoral.linkJNE;
     document.getElementById("link-onpe").href = DATA.electoral.linkONPE;
   }
 
-  function renderRedes() {
-    const el = document.getElementById("social-grid");
+  function renderRedesInto(elId) {
+    const el = document.getElementById(elId);
+    if (!el) return;
+
     const activas = Object.keys(REDES_META)
-      .filter((key) => DATA.redes[key])
+      .filter((key) => DATA.redes[key] && DATA.redes[key].url)
       .map((key) => {
         const meta = REDES_META[key];
+        const red = DATA.redes[key];
         return `
-          <a class="social-card ${meta.color}" href="${DATA.redes[key]}" target="_blank" rel="noopener">
+          <a class="social-card ${meta.color}" href="${red.url}" target="_blank" rel="noopener noreferrer">
             <span class="icon-round">${iconOr(meta.icono)}</span>
-            <span class="handle">${meta.nombre}</span>
+            <span class="handle">${red.nombre}</span>
           </a>
         `;
       });
@@ -222,6 +236,13 @@
     el.innerHTML = activas.length
       ? activas.join("")
       : `<p class="empty-state">Enlaces a redes disponibles próximamente.</p>`;
+
+    el.classList.toggle("social-grid-single", activas.length === 1);
+  }
+
+  function renderRedes() {
+    renderRedesInto("home-social-grid");
+    renderRedesInto("social-grid");
   }
 
   function renderFooter() {
@@ -231,14 +252,14 @@
   }
 
   function init() {
-    renderHeaderAndHero();
     renderMusic();
     renderValues();
     renderTrayectoria();
     renderPropuestas();
-    renderZonas();
+    renderRecorridosZona();
     renderCaminatas();
     renderProximas();
+    renderEventosEmptyState();
     renderElectoral();
     renderRedes();
     renderFooter();
