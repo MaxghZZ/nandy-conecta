@@ -666,6 +666,41 @@ button { font-family: inherit; }
 .agenda-meta { margin: 0; font-size: 12px; color: var(--ink-soft); display: flex; align-items: center; gap: 5px; }
 
 .card-electoral { margin-top: 20px; }
+.card-vota {
+  margin-top: 20px;
+  padding: 0;
+  overflow: hidden;
+}
+.vota-media {
+  width: 100%;
+  overflow: hidden;
+}
+.vota-img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.vota-cta {
+  background: var(--gradient-dark);
+  color: var(--white);
+  text-align: center;
+  padding: 22px 20px;
+}
+.vota-title {
+  font-family: var(--font-display);
+  font-weight: 900;
+  text-transform: uppercase;
+  font-size: 20px;
+  letter-spacing: .5px;
+  color: var(--white);
+  margin: 0 0 6px;
+}
+.vota-desc {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.85);
+}
 .card-electoral-title {
   display: flex;
   align-items: center;
@@ -918,6 +953,7 @@ button { font-family: inherit; }
 
   .section-copy { max-width: 560px; }
   .card-electoral { max-width: 640px; margin-left: auto; margin-right: auto; }
+  .card-vota { max-width: 640px; margin-left: auto; margin-right: auto; }
 }
 
 /* ==========================================================================
