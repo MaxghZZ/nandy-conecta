@@ -121,93 +121,64 @@
     }
   }
 
-  function renderRecorridosZona() {
-    const data = DATA.recorridosZona;
+  function renderVideos() {
+    const videos = DATA.videos || [];
+    const destacado = videos.find((video) => video.destacado) || videos[0];
+    const secundarios = videos.filter((video) => video !== destacado);
+    const destacadoEl = document.getElementById("video-destacado");
+    const latestEl = document.getElementById("videos-latest");
+    const gridEl = document.getElementById("videos-grid");
 
-    const introEl = document.getElementById("zona-intro");
-    if (introEl) introEl.textContent = data.intro;
+    const playIcon = `
+      <span class="video-play" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor"><path d="m9 7 8 5-8 5z"/></svg>
+      </span>`;
 
-    const notaEl = document.getElementById("zona-nota-ubicacion");
-    if (notaEl) notaEl.textContent = data.notaUbicacion;
+    const preview = (video, featured) => video.thumbnail
+      ? `<div class="video-preview${featured ? " video-preview-featured" : ""}">
+          <img src="${video.thumbnail}" alt="${video.titulo || "Portada de video oficial de Nandy"}" loading="lazy" decoding="async">
+          <span class="video-tiktok-badge">TikTok</span>
+          ${playIcon}
+        </div>`
+      : `<div class="video-preview video-fallback${featured ? " video-preview-featured" : ""}">
+          <span class="video-tiktok-badge">TikTok</span>
+          ${playIcon}
+        </div>`;
 
-    const wrap = document.getElementById("zona-select-wrap");
-    const hasZonas = !!(data.zonas && data.zonas.length);
-    wrap.hidden = !hasZonas;
-    if (!hasZonas) return;
-
-    const select = document.getElementById("zona-select");
-    data.zonas.forEach((z) => {
-      const opt = document.createElement("option");
-      opt.value = z.id;
-      opt.textContent = z.nombre;
-      select.appendChild(opt);
-    });
-
-    const feedback = document.getElementById("zona-feedback");
-    document.getElementById("zona-ver-btn").addEventListener("click", () => {
-      const selected = data.zonas.find((z) => z.id === select.value);
-      feedback.hidden = false;
-      feedback.textContent = selected
-        ? `Mostrando caminatas realizadas y próximas visitas para "${selected.nombre}".`
-        : "Selecciona una zona de la lista para continuar.";
-    });
-  }
-
-  function renderCaminatas() {
-    const section = document.getElementById("caminatas-section");
-    const items = DATA.actividades.caminatasRealizadas;
-    const hasItems = !!(items && items.length);
-    section.hidden = !hasItems;
-    if (!hasItems) return;
-
-    document.getElementById("caminatas-list").innerHTML = items.map((c) => `
-      <div class="agenda-item is-realizado">
-        <div>
-          <span class="agenda-badge">${c.zona || "Realizado"}</span>
-          <p class="agenda-title">${c.titulo}</p>
-          <p class="agenda-meta">${[c.fecha].filter(Boolean).join(" · ")}</p>
-          ${c.enlace ? `<a href="${c.enlace}" class="link-small" target="_blank" rel="noopener">Ver video/enlace →</a>` : ""}
-        </div>
-      </div>
-    `).join("");
-  }
-
-  function renderProximas() {
-    const section = document.getElementById("proximas-section");
-    const items = DATA.actividades.proximas;
-    const hasItems = !!(items && items.length);
-    section.hidden = !hasItems;
-    if (!hasItems) return;
-
-    document.getElementById("proximas-list").innerHTML = items.map((a) => `
-      <div class="agenda-item">
-        <div>
-          <span class="agenda-badge">${a.esCierre ? "Cierre de Campaña" : "Próximo"}</span>
-          <p class="agenda-title">${a.titulo}</p>
-          <p class="agenda-meta">${[a.fecha, a.lugar].filter(Boolean).join(" · ")}</p>
-        </div>
-      </div>
-    `).join("");
-  }
-
-  function renderEventosEmptyState() {
-    const hasZonas = !!(DATA.recorridosZona.zonas && DATA.recorridosZona.zonas.length);
-    const hasCaminatas = !!(DATA.actividades.caminatasRealizadas && DATA.actividades.caminatasRealizadas.length);
-    const hasProximas = !!(DATA.actividades.proximas && DATA.actividades.proximas.length);
-    const hasAny = hasZonas || hasCaminatas || hasProximas;
-
-    const empty = document.getElementById("recorridos-empty-state");
-    empty.hidden = hasAny;
-    if (hasAny) return;
-
-    const tiktokUrl = DATA.redes.tiktok && DATA.redes.tiktok.url;
-    const cta = document.getElementById("recorridos-empty-tiktok");
-    if (tiktokUrl) {
-      cta.href = tiktokUrl;
-      cta.hidden = false;
+    if (destacado) {
+      destacadoEl.innerHTML = `
+        <article class="video-featured">
+          <a href="${destacado.url}" target="_blank" rel="noopener noreferrer" aria-label="Ver video destacado en TikTok">
+            ${preview(destacado, true)}
+          </a>
+          <div class="video-featured-content">
+            <span class="video-kicker">Video destacado</span>
+            ${destacado.titulo ? `<h3 class="video-featured-title">${destacado.titulo}</h3>` : `<h3 class="video-featured-title">Contenido oficial de Nandy</h3>`}
+            ${destacado.descripcion ? `<p class="video-description video-featured-description">${destacado.descripcion}</p>` : `<p class="video-description">Mira este video en la cuenta oficial de TikTok de Nandy.</p>`}
+            <a class="btn btn-gradient video-cta" href="${destacado.url}" target="_blank" rel="noopener noreferrer">Ver en TikTok</a>
+          </div>
+        </article>`;
     } else {
-      cta.hidden = true;
+      destacadoEl.innerHTML = "";
     }
+
+    latestEl.hidden = !secundarios.length;
+    gridEl.innerHTML = secundarios.map((video) => `
+      <article class="video-card">
+        <a class="video-card-preview-link" href="${video.url}" target="_blank" rel="noopener noreferrer" aria-label="Ver video en TikTok">
+          ${preview(video, false)}
+        </a>
+        <div class="video-card-content">
+          ${video.titulo ? `<h4 class="video-card-title">${video.titulo}</h4>` : video.descripcion ? `<p class="video-card-caption">${video.descripcion}</p>` : ""}
+          <a class="video-card-link" href="${video.url}" target="_blank" rel="noopener noreferrer">Ver video <span aria-hidden="true">→</span></a>
+        </div>
+      </article>
+    `).join("");
+
+    const moreEl = document.getElementById("videos-more");
+    const profileUrl = DATA.redes.tiktok && DATA.redes.tiktok.url;
+    moreEl.hidden = !profileUrl;
+    if (profileUrl) document.getElementById("videos-tiktok-link").href = profileUrl;
   }
 
   function renderElectoral() {
@@ -256,10 +227,7 @@
     renderValues();
     renderTrayectoria();
     renderPropuestas();
-    renderRecorridosZona();
-    renderCaminatas();
-    renderProximas();
-    renderEventosEmptyState();
+    renderVideos();
     renderElectoral();
     renderRedes();
     renderFooter();
